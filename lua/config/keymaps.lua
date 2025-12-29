@@ -44,13 +44,11 @@ map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 map({ "n", "v" }, "<leader>h", "^", { desc = "Go to Start of line" })
 map({ "n", "v" }, "<leader>l", "$", { desc = "Go to End of line" })
 
--- 8. 精简进入插入模式的按键 (只保留 i, I, A)
--- 禁用 a, o, O 以强制使用自定义逻辑
--- 恢复 I (行首插入/块编辑) 和 A (行尾插入)
+-- 8. 精简进入插入模式的按键 (只保留 i, I, A, o, O)
+-- 禁用 a 以强制使用自定义逻辑
+-- 恢复 I (行首插入/块编辑), A (行尾插入), o (下行插入), O (上行插入)
 local modes = { "n", "v" }
 map(modes, "a", "<nop>")
-map(modes, "o", "<nop>")
-map(modes, "O", "<nop>")
 
 -- 9. 快速向上换行 (代替 O)
 -- 映射 Ctrl + Enter 向上开启新行 (Normal 模式)
@@ -63,6 +61,10 @@ map("n", "<CR>", "o", { desc = "Insert line below" })
 map("i", "<S-CR>", "<Esc>O", { desc = "Insert line above" })
 -- Ctrl + Enter: 在下方插入新行 (哪怕光标在行中间)
 map("i", "<C-CR>", "<Esc>o", { desc = "Insert line below" })
+
+-- 11. GitHub Copilot 增强
+map("n", "<leader>cp", "<cmd>Copilot panel<cr>", { desc = "Open Copilot Panel" })
+map("i", "<M-p>", "<cmd>Copilot panel<cr>", { desc = "Open Copilot Panel" })
 
 -- 7. 只删除而不复制 (使用黑洞寄存器)
 -- 这样你删除东西时，不会覆盖你刚刚 yy 复制的内容

@@ -6,4 +6,7 @@
 vim.opt.relativenumber = false
 vim.opt.number = true
 
+-- 滚动时不强制保持光标与边缘的距离 (0 表示最贴边)
+vim.opt.scrolloff = 0
+
 require("config.neovide")
