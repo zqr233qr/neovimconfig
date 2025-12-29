@@ -40,9 +40,32 @@ map("n", "<F11>", "<leader>di", { desc = "Debug Step Into", remap = true })
 -- 4. 快速保存 (比 :w<CR> 快)
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
--- 5. 插入模式下的微操 (不退出模式移动光标)
--- Ctrl+h/j/k/l 在打字时微调位置
-map("i", "<C-h>", "<Left>", { desc = "Left" })
-map("i", "<C-l>", "<Right>", { desc = "Right" })
-map("i", "<C-j>", "<Down>", { desc = "Down" })
-map("i", "<C-k>", "<Up>", { desc = "Up" })
+-- 5. 行首行尾快速跳转 (代替 ^ 和 $)
+map({ "n", "v" }, "<leader>h", "^", { desc = "Go to Start of line" })
+map({ "n", "v" }, "<leader>l", "$", { desc = "Go to End of line" })
+
+-- 8. 精简进入插入模式的按键 (只保留 i, I, A)
+-- 禁用 a, o, O 以强制使用自定义逻辑
+-- 恢复 I (行首插入/块编辑) 和 A (行尾插入)
+local modes = { "n", "v" }
+map(modes, "a", "<nop>")
+map(modes, "o", "<nop>")
+map(modes, "O", "<nop>")
+
+-- 9. 快速向上换行 (代替 O)
+-- 映射 Ctrl + Enter 向上开启新行 (Normal 模式)
+map("n", "<C-CR>", "O", { desc = "Insert line above" })
+-- 映射回车键本身在 Normal 模式下向下换行 (代替 o)
+map("n", "<CR>", "o", { desc = "Insert line below" })
+
+-- 10. 插入模式下的特殊换行
+-- Shift + Enter: 在上方插入新行 (哪怕正在打字)
+map("i", "<S-CR>", "<Esc>O", { desc = "Insert line above" })
+-- Ctrl + Enter: 在下方插入新行 (哪怕光标在行中间)
+map("i", "<C-CR>", "<Esc>o", { desc = "Insert line below" })
+
+-- 7. 只删除而不复制 (使用黑洞寄存器)
+-- 这样你删除东西时，不会覆盖你刚刚 yy 复制的内容
+map({ "n", "v" }, "x", '"_d', { desc = "Delete without yanking" })
+map({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
+map("n", "xx", '"_dd', { desc = "Delete line without yanking" })
