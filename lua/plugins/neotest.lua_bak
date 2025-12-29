@@ -1,0 +1,47 @@
+return {
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "fredrikaverpil/neotest-golang", -- 使用更现代的 golang 适配器
+    },
+    config = function()
+      local neotest = require("neotest")
+      
+      neotest.setup({
+        adapters = {
+          require("neotest-golang")({
+            go_test_args = { "-v", "-race", "-count=1", "-timeout=60s" },
+            dap_go_enabled = true, -- 开启调试支持
+          }),
+        },
+      })
+    end,
+    -- 强制定义快捷键，确保它们一定存在
+    keys = {
+      {
+        "<leader>tt",
+        function() require("neotest").run.run() end,
+        desc = "Run Nearest Test (Force)",
+      },
+      {
+        "<leader>tf",
+        function() require("neotest").run.run(vim.fn.expand("%")) end,
+        desc = "Run File Tests (Force)",
+      },
+      {
+        "<leader>to",
+        function() require("neotest").output.open({ enter = true, auto_close = true }) end,
+        desc = "Show Test Output",
+      },
+      {
+        "<leader>tp",
+        function() require("neotest").output_panel.toggle() end,
+        desc = "Toggle Output Panel",
+      },
+    },
+  },
+}
