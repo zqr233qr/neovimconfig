@@ -19,12 +19,9 @@ if vim.g.neovide then
   vim.g.neovide_input_ime = true
   
   -- 5. 苹果用户核心快捷键 (Command 键映射)
-  -- 映射 Command + 1-9 切换标签页
-  for i = 1, 9 do
-    vim.keymap.set('n', '<D-' .. i .. '>', '<cmd>BufferLineGoToBuffer ' .. i .. '<cr>', { desc = "Switch to buffer " .. i })
-  end
-
+  
   -- 映射 Command + s 保存
+  vim.keymap.set({'n', 'i', 'v'}, '<D-s>', '<cmd>w<cr>', { desc = "Save" })
   vim.keymap.set({'n', 'i', 'v'}, '<D-s>', '<cmd>w<cr>', { desc = "Save" })
   -- 映射 Command + w 关闭当前标签页
   vim.keymap.set('n', '<D-w>', '<cmd>bd<cr>', { desc = "Close Buffer" })
