@@ -4,14 +4,27 @@ return {
     opts = {
       options = {
         -- 开启序号显示
-        -- "ordinal": 显示 Buffer 的相对序号 (1, 2, 3...)
-        -- "buffer_id": 显示 Buffer 的内部 ID (不推荐，会变)
         numbers = "ordinal", 
         
-        -- 美化样式
-        separator_style = "slant", -- 斜角分割线，看起来更现代
+        -- 简约风格设置
+        separator_style = "thin", -- 改为细线，非常适合透明背景
         show_buffer_close_icons = false,
         show_close_icon = false,
+        
+        -- 视觉优化
+        enforce_regular_tabs = false,
+        always_show_bufferline = true,
+        
+        -- 确保与透明背景融合
+        highlights = {
+          fill = {
+            bg = "none",
+          },
+          separator = {
+            fg = "#3b4261", -- 细线的颜色，可以根据需要微调
+            bg = "none",
+          },
+        },
       },
     },
   },

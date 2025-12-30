@@ -27,6 +27,12 @@ return {
         callback = switch_to_english,
       })
       
+      -- 打开 Neovim 时 -> 自动切回英文
+      vim.api.nvim_create_autocmd("VimEnter", {
+        group = group,
+        callback = switch_to_english,
+      })
+      
       -- 聚焦窗口时也切回英文 (防止切换窗口后状态错乱)
       vim.api.nvim_create_autocmd("FocusGained", {
         group = group,

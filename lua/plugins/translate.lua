@@ -16,16 +16,16 @@ return {
         },
       })
 
-      -- 快捷键配置
+      -- 快捷键配置 (改为 <leader>y 以避开 <leader>t 测试前缀)
       local map = vim.keymap.set
       
       -- 翻译选中内容 (Visual Mode)
-      map("v", "<leader>t", ":Translate ZH -output=floating<CR>", { desc = "Translate to Chinese (Popup)" })
-      map("v", "<leader>T", ":Translate EN -output=floating<CR>", { desc = "Translate to English (Popup)" })
+      map("v", "<leader>y", ":Translate ZH -output=floating<CR>", { desc = "Translate to Chinese (Popup)" })
+      map("v", "<leader>Y", ":Translate EN -output=floating<CR>", { desc = "Translate to English (Popup)" })
       
       -- 翻译当前单词 (Normal Mode)
-      map("n", "<leader>t", "viw:Translate ZH -output=floating<CR>", { desc = "Translate Word to Chinese" })
-      map("n", "<leader>T", "viw:Translate EN -output=floating<CR>", { desc = "Translate Word to English" })
+      map("n", "<leader>y", "viw:Translate ZH -output=floating<CR>", { desc = "Translate Word to Chinese" })
+      map("n", "<leader>Y", "viw:Translate EN -output=floating<CR>", { desc = "Translate Word to English" })
     end,
   },
 }
