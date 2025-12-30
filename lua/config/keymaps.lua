@@ -1,82 +1,87 @@
 -- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
+-- Default keymaps: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 
 local map = vim.keymap.set
 
--- 快速运行 Go 项目 (go run .)
-map("n", "<leader>gr", function()
-  Snacks.terminal.open("go run .")
-end, { desc = "Go Run Project" })
-
--- 快速运行当前 Go 文件 (go run current_file.go)
-map("n", "<leader>gf", function()
-  Snacks.terminal.open("go run " .. vim.fn.expand("%"))
-end, { desc = "Go Run Current File" })
-
--- 退出终端插入模式的快捷键
-map("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
-
 -- ========================================================
--- 🚀 效率提升改键 (Efficiency Hacks)
+-- 1. 基础文件操作 (Basic File Operations)
 -- ========================================================
 
--- 1. 极速退出插入模式 (手指不离主键盘区)
--- 输入 "jj" 立即等同于按 Esc
+-- 快速保存 (Ctrl+s)
+map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+
+-- 撤销/重做 (Ctrl+z / Ctrl+Shift+z)
+map({ "i", "x", "n", "s" }, "<C-z>", "<cmd>undo<cr>", { desc = "Undo" })
+map({ "i", "x", "n", "s" }, "<C-S-z>", "<cmd>redo<cr>", { desc = "Redo" })
+
+-- 全选 (Alt+a)
+map({ "n", "v", "i" }, "<M-a>", "<esc>ggVG", { desc = "Select All" })
+
+-- ========================================================
+-- 2. 标签页与窗口管理 (Buffer & Window)
+-- ========================================================
+
+-- 快速切换标签页 (Alt + 1..9)
+for i = 1, 9 do
+  map("n", "<M-" .. i .. ">", "<cmd>BufferLineGoToBuffer " .. i .. "<cr>", { desc = "Go to buffer " .. i })
+end
+
+-- 关闭当前标签页 (Alt + w)
+map("n", "<M-w>", "<cmd>bd<cr>", { desc = "Close Buffer" })
+
+-- ========================================================
+-- 3. 编辑效率提升 (Efficiency Hacks)
+-- ========================================================
+
+-- 极速退出插入模式 (jj)
 map("i", "jj", "<Esc>", { desc = "Fast Escape" })
 
--- 2. 搜索/翻页时保持光标居中 (减少眼球移动)
+-- 插入模式下的快速换行
+map("i", "<S-CR>", "<Esc>O", { desc = "Insert line above" }) -- Shift+Enter: 上方插行
+map("i", "<C-CR>", "<Esc>o", { desc = "Insert line below" }) -- Ctrl+Enter: 下方插行
+
+-- 行首行尾跳转 (<leader>h / l)
+map({ "n", "v" }, "<leader>h", "^", { desc = "Go to Start of line" })
+map({ "n", "v" }, "<leader>l", "$", { desc = "Go to End of line" })
+
+-- 黑洞删除 (不覆盖剪贴板)
+map({ "n", "v" }, "x", '"_d', { desc = "Delete without yanking" })
+map({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
+map("n", "xx", '"_dd', { desc = "Delete line without yanking" })
+
+-- 搜索结果自动居中
 map("n", "n", "nzzzv", { desc = "Next match & center" })
 map("n", "N", "Nzzzv", { desc = "Prev match & center" })
 map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down & center" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up & center" })
 
--- 3. 经典 IDE 习惯复刻
-map("n", "<F2>", "<leader>cr", { desc = "Rename (Smart)" , remap = true })
+-- ========================================================
+-- 4. Go 开发与终端 (Development)
+-- ========================================================
+
+-- 快速运行
+map("n", "<leader>gr", function() Snacks.terminal.open("go run .") end, { desc = "Go Run Project" })
+map("n", "<leader>gf", function() Snacks.terminal.open("go run " .. vim.fn.expand("%")) end, { desc = "Go Run Current File" })
+
+-- 终端内退出插入模式
+map("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+
+-- 经典 IDE 键位映射
+map("n", "<F2>", "<leader>cr", { desc = "Rename (Smart)", remap = true })
 map("n", "<F5>", "<leader>dc", { desc = "Debug Continue", remap = true })
 map("n", "<F10>", "<leader>do", { desc = "Debug Step Over", remap = true })
 map("n", "<F11>", "<leader>di", { desc = "Debug Step Into", remap = true })
 
--- 4. 快速保存 (比 :w<CR> 快)
-map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+-- ========================================================
+-- 5. AI 辅助 (Copilot)
+-- ========================================================
 
--- 5. 行首行尾快速跳转 (代替 ^ 和 $)
-map({ "n", "v" }, "<leader>h", "^", { desc = "Go to Start of line" })
-map({ "n", "v" }, "<leader>l", "$", { desc = "Go to End of line" })
-
--- 8. 精简进入插入模式的按键 (只保留 i, I, A, o, O)
--- 禁用 a 以强制使用自定义逻辑
--- 恢复 I (行首插入/块编辑), A (行尾插入), o (下行插入), O (上行插入)
-local modes = { "n", "v" }
-map(modes, "a", "<nop>")
-
--- 9. 快速向上换行 (代替 O)
--- 映射 Ctrl + Enter 向上开启新行 (Normal 模式)
-map("n", "<C-CR>", "O", { desc = "Insert line above" })
--- 映射回车键本身在 Normal 模式下向下换行 (代替 o)
-map("n", "<CR>", "o", { desc = "Insert line below" })
-
--- 10. 插入模式下的特殊换行
--- Shift + Enter: 在上方插入新行 (哪怕正在打字)
-map("i", "<S-CR>", "<Esc>O", { desc = "Insert line above" })
--- Ctrl + Enter: 在下方插入新行 (哪怕光标在行中间)
-map("i", "<C-CR>", "<Esc>o", { desc = "Insert line below" })
-
--- 11. GitHub Copilot 增强
+-- 打开 Copilot 面板 (Alt + p 或 <leader>cp)
 map("n", "<leader>cp", "<cmd>Copilot panel<cr>", { desc = "Open Copilot Panel" })
 map("i", "<M-p>", "<cmd>Copilot panel<cr>", { desc = "Open Copilot Panel" })
 
--- 7. 只删除而不复制 (使用黑洞寄存器)
--- 这样你删除东西时，不会覆盖你刚刚 yy 复制的内容
-map({ "n", "v" }, "x", '"_d', { desc = "Delete without yanking" })
-map({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
-map("n", "xx", '"_dd', { desc = "Delete line without yanking" })-- 12. 快速切换标签页 (Alt + 数字)
-map('n', '<M-1>', '<cmd>BufferLineGoToBuffer 1<cr>', { desc = 'Go to buffer 1' })
-map('n', '<M-2>', '<cmd>BufferLineGoToBuffer 2<cr>', { desc = 'Go to buffer 2' })
-map('n', '<M-3>', '<cmd>BufferLineGoToBuffer 3<cr>', { desc = 'Go to buffer 3' })
-map('n', '<M-4>', '<cmd>BufferLineGoToBuffer 4<cr>', { desc = 'Go to buffer 4' })
-map('n', '<M-5>', '<cmd>BufferLineGoToBuffer 5<cr>', { desc = 'Go to buffer 5' })
-map('n', '<M-6>', '<cmd>BufferLineGoToBuffer 6<cr>', { desc = 'Go to buffer 6' })
-map('n', '<M-7>', '<cmd>BufferLineGoToBuffer 7<cr>', { desc = 'Go to buffer 7' })
-map('n', '<M-8>', '<cmd>BufferLineGoToBuffer 8<cr>', { desc = 'Go to buffer 8' })
-map('n', '<M-9>', '<cmd>BufferLineGoToBuffer 9<cr>', { desc = 'Go to buffer 9' })
+-- ========================================================
+-- 6. 精简模式 (Disable Keys)
+-- ========================================================
+-- 禁用 'a' 以强制使用更精确的操作 (i, A, o, O)
+map({ "n", "v" }, "a", "<nop>")
