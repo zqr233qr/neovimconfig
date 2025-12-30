@@ -30,6 +30,11 @@
 - **`ca(`**: 修改括号及其内容。
 - **`gcc`**: 注释/取消注释当前行。
 
+### 🌐 翻译工具 (Translate)
+需先安装: `brew install translate-shell`
+- **`<leader> t`**: 翻译为 **中文** (ZH)。
+- **`<leader> T`**: 翻译为 **英文** (EN)。
+
 ---
 
 ## 2. Go 开发全流程
@@ -42,9 +47,11 @@
 - **`F11`**: 单步进入 (Step Into)。
 - **`F2`**: 重命名变量 (LSP Rename)。
 
-### AI 辅助 (Copilot)
-- **`<Tab>`**: 接受 AI 的灰色建议。
-- **`Alt + p`**: 打开 Copilot 面板 (查看多行/多个建议)。
+### AI 辅助 (Supermaven)
+- **`<Tab>`**: 接受全部建议。
+- **`Alt + l`**: **仅接受下一个单词** (精准控制)。
+- **开关**: 修改 `supermaven.lua` 中的 `enabled` 属性。
+- **状态检查**: `:SupermavenStatus`。
 
 ---
 
