@@ -4,6 +4,9 @@ if vim.g.neovide then
   vim.g.neovide_confirm_quit = true
   vim.g.neovide_remember_window_size = true
   
+  -- 视觉美化：增加行间距，让代码更透气
+  vim.opt.linespace = 4
+  
   -- 2. 动画效果
   vim.g.neovide_cursor_animation_length = 0.05
   vim.g.neovide_cursor_trail_size = 0.3

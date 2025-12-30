@@ -1,12 +1,15 @@
 -- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
+-- Default options: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 
--- 关闭相对行号，只显示绝对行号
-vim.opt.relativenumber = false
-vim.opt.number = true
+-- 1. 基础显示设置
+vim.opt.relativenumber = false -- 禁用相对行号
+vim.opt.number = true          -- 启用绝对行号
+vim.opt.scrolloff = 0          -- 滚动时不强制偏移光标
 
--- 滚动时不强制保持光标与边缘的距离 (0 表示最贴边)
-vim.opt.scrolloff = 0
+-- 2. macOS & Neovide 优化
+if vim.g.neovide then
+  vim.g.neovide_input_macos_option_key_is_meta = "both"
+end
 
-require("config.neovide")if vim.g.neovide then vim.g.neovide_input_macos_option_key_is_meta = "both" end
+-- 3. 加载扩展配置
+require("config.neovide")
