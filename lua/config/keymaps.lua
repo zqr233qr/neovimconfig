@@ -10,10 +10,6 @@ local map = vim.keymap.set
 -- 快速保存 (Ctrl+s)
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
--- 撤销/重做 (Ctrl+z / Ctrl+Shift+z)
-map({ "i", "x", "n", "s" }, "<C-z>", "<cmd>undo<cr>", { desc = "Undo" })
-map({ "i", "x", "n", "s" }, "<C-S-z>", "<cmd>redo<cr>", { desc = "Redo" })
-
 -- 全选 (Alt+a)
 map({ "n", "v", "i" }, "<M-a>", "<esc>ggVG", { desc = "Select All" })
 
