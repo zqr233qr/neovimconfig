@@ -12,4 +12,5 @@ if vim.g.neovide then
 end
 
 -- 3. 加载扩展配置
+
 require("config.neovide")

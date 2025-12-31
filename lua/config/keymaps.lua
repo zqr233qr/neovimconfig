@@ -36,13 +36,7 @@ map("i", "jj", "<Esc>", { desc = "Fast Escape" })
 map("i", "<S-CR>", "<Esc>O", { desc = "Insert line above" }) -- Shift+Enter: 上方插行
 map("i", "<C-CR>", "<Esc>o", { desc = "Insert line below" }) -- Ctrl+Enter: 下方插行
 
--- 修复 Alt + 方向键在 Insert 模式下退出的问题
-map("i", "<M-Left>", "<Left>", { desc = "Move cursor left" })
-map("i", "<M-Right>", "<Right>", { desc = "Move cursor right" })
-map("i", "<M-Up>", "<Up>", { desc = "Move cursor up" })
-map("i", "<M-Down>", "<Down>", { desc = "Move cursor down" })
-
--- 行首行尾跳转 (<leader>h / l)
+-- 11. GitHub Copilot 增强
 map({ "n", "v" }, "<leader>h", "^", { desc = "Go to Start of line" })
 map({ "n", "v" }, "<leader>l", "$", { desc = "Go to End of line" })
 

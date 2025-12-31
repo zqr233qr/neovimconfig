@@ -6,7 +6,7 @@ return {
       use_default_keymaps = false,
       keymaps = {
         inline = {
-          ["<TAB>"] = "accept_all_suggestions",
+          ["<M-TAB>"] = "accept_all_suggestions",
           ["<M-l>"] = "accept_line",
         },
         chat = {

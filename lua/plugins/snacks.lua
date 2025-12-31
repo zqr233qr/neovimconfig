@@ -1,7 +1,24 @@
+local function header_banner()
+  return [[
+ ▄▄▄   ▄▄  ▄▄    ▄▄   ▄▄▄▄▄▄   ▄▄▄  ▄▄▄ 
+ ███   ██  ▀██  ██▀   ▀▀██▀▀   ███  ███ 
+ ██▀█  ██   ██  ██      ██     ████████ 
+ ██ ██ ██   ██  ██      ██     ██ ██ ██ 
+ ██  █▄██    ████       ██     ██ ▀▀ ██ 
+ ██   ███    ████     ▄▄██▄▄   ██    ██ 
+ ▀▀   ▀▀▀    ▀▀▀▀     ▀▀▀▀▀▀   ▀▀    ▀▀ 
+ ]]
+end
+
 return {
   {
     "folke/snacks.nvim",
     opts = {
+      dashboard = {
+        preset = {
+          header = header_banner(),
+        },
+      },
       image = {
         enabled = true,
       },
